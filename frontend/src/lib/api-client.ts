@@ -36,15 +36,17 @@ async function request<T>(
   });
 
   if (response.status === 401) {
-    // Session expired: clear credentials and redirect to login page
-    localStorage.removeItem('tracemind_access_token');
-    localStorage.removeItem('tracemind_refresh_token');
-    localStorage.removeItem('tracemind_user');
-    
-    if (window.location.pathname !== '/login') {
-      window.location.href = '/login';
+    if (!path.includes('/auth/login')) {
+      // Session expired: clear credentials and redirect to login page
+      localStorage.removeItem('tracemind_access_token');
+      localStorage.removeItem('tracemind_refresh_token');
+      localStorage.removeItem('tracemind_user');
+      
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+      throw new APIError('Session expired. Please log in again.', 401);
     }
-    throw new APIError('Session expired. Please log in again.', 401);
   }
 
   if (!response.ok) {
