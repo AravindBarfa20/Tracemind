@@ -57,7 +57,7 @@ async def get_current_user(
     if not org:
         org = Organization(
             name="Default Organization",
-            slug="default-organization",
+            slug=f"default-org-{str(user.id)[:8]}",
             owner_id=user.id,
         )
         db.add(org)
