@@ -1,0 +1,176 @@
+.traces-page-view {
+  width: 100%;
+}
+
+.traces-grid-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.traces-list-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.traces-panel-heading {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.traces-filter-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.traces-select-control {
+  height: 38px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  padding: 0 var(--space-3);
+  width: 100%;
+  transition: all var(--transition-fast);
+}
+
+.traces-select-control:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 2px var(--color-focus-ring);
+  outline: none;
+}
+
+.traces-ingest-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Trace Table Lists */
+.traces-console-card {
+  height: calc(100vh - var(--header-height) - var(--space-12));
+  display: flex;
+  flex-direction: column;
+}
+
+.traces-console-card > .card-body {
+  flex: 1;
+  overflow: hidden;
+  padding: 0;
+}
+
+.traces-console-body {
+  height: 100%;
+  overflow-y: auto;
+  padding: var(--space-4);
+}
+
+.traces-list-view-table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.traces-list-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 100px;
+  padding: var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  border-bottom: 2px solid var(--color-border);
+  text-transform: uppercase;
+}
+
+.traces-list-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 100px;
+  padding: var(--space-3);
+  font-size: var(--font-size-sm);
+  border-bottom: 1px solid var(--color-border);
+  align-items: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.traces-list-row:hover {
+  background: var(--color-neutral-100);
+  transform: translateX(4px);
+}
+
+.traces-list-row .span-name {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+/* Gantt Chart offsets */
+.trace-gantt-chart-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-2);
+}
+
+.gantt-span-row {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.gantt-span-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.span-name-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.span-meta-tag {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.gantt-span-timeline-bar-wrapper {
+  background: var(--color-neutral-100);
+  height: 12px;
+  border-radius: var(--radius-full);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+
+.gantt-span-bar {
+  background: var(--color-primary-500);
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-slow) ease;
+}
+
+.gantt-span-bar.error {
+  background: var(--color-error-500);
+}
+
+@media (max-width: 992px) {
+  .traces-grid-layout {
+    grid-template-columns: 1fr;
+  }
+  .traces-console-card {
+    height: 500px;
+  }
+}

@@ -1,0 +1,40 @@
+.skeleton {
+  background-color: var(--color-neutral-200);
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+/* Shapes */
+.skeleton.text {
+  height: 12px;
+  margin-bottom: var(--space-2);
+  width: 100%;
+}
+
+.skeleton.text:last-child {
+  width: 60%;
+  margin-bottom: 0;
+}
+
+.skeleton.circle {
+  border-radius: var(--radius-full);
+  width: 40px;
+  height: 40px;
+}
+
+.skeleton.rect {
+  height: 40px;
+  width: 100%;
+}
+
+.skeleton.card {
+  height: 140px;
+  width: 100%;
+  border-radius: var(--radius-lg);
+}
+
+.skeleton-text-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

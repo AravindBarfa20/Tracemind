@@ -1,0 +1,108 @@
+.service-create-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.create-view-breadcrumbs {
+  margin-bottom: calc(-1 * var(--space-2));
+}
+
+.create-view-header {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-4);
+}
+
+.create-form-card {
+  box-shadow: var(--shadow-sm);
+}
+
+.service-create-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.form-two-column-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+
+.form-col-left, .form-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Custom Textarea styling matching Input controls */
+.form-textarea-control {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+  background: var(--color-bg-elevated);
+  resize: vertical;
+  transition: all var(--transition-fast) ease;
+  line-height: var(--line-height-normal);
+}
+
+.form-textarea-control:focus {
+  border-color: var(--color-primary-600);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+/* Custom dropdown selects */
+.form-select-control {
+  height: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-6) 0 var(--space-3);
+  font-size: var(--font-size-sm);
+  background: var(--color-bg-elevated);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast) ease;
+}
+
+.form-select-control:focus {
+  border-color: var(--color-primary-600);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.form-inline-fields-row {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.form-action-buttons-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-5);
+}
+
+@media (max-width: 768px) {
+  .form-two-column-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+.form-error-callout {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-error-50);
+  border: 1px solid var(--color-error-100);
+  color: var(--color-error-700);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-4);
+}

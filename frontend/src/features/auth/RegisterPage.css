@@ -1,0 +1,128 @@
+.register-page-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-bg);
+}
+
+.register-background-shifter {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: radial-gradient(circle at 30% 30%, var(--color-primary-50) 0%, transparent 40%),
+              radial-gradient(circle at 70% 70%, var(--color-accent-50) 0%, transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease infinite;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 440px;
+  z-index: 2;
+  border-radius: var(--radius-xl);
+}
+
+/* Brand section */
+.register-brand-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+
+.brand-logo-hex {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-600);
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+
+.brand-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.brand-tagline {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Form */
+.register-form-element {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.form-error-callout {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-error-50);
+  border: 1px solid var(--color-error-100);
+  color: var(--color-error-700);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Strength Meter */
+.password-strength-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.strength-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.strength-meter-bar-bg {
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-neutral-200);
+  overflow: hidden;
+}
+
+.strength-meter-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-base) ease;
+  width: 0%;
+}
+
+.register-submit-btn {
+  margin-top: var(--space-2);
+}
+
+/* Footer links */
+.register-card-footer {
+  text-align: center;
+}
+
+.login-redirect-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.login-link-anchor {
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-semibold);
+}
+
+.login-link-anchor:hover {
+  text-decoration: underline;
+}

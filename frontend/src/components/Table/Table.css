@@ -1,0 +1,106 @@
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+}
+
+.custom-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.custom-data-table th {
+  background: var(--color-neutral-50);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+  text-transform: uppercase;
+  letter-spacing: var(--space-1);
+}
+
+.custom-data-table th.sortable-header {
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-data-table th.sortable-header:hover {
+  background: var(--color-neutral-100);
+  color: var(--color-text-primary);
+}
+
+.table-header-cell-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.sort-arrow-indicator {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+}
+
+.custom-data-table th.active-sort {
+  color: var(--color-primary-700);
+}
+.custom-data-table th.active-sort .sort-arrow-indicator {
+  color: var(--color-primary-600);
+}
+
+.custom-data-table td {
+  padding: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.custom-data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.custom-data-table tr.clickable-row {
+  cursor: pointer;
+  transition: background-color var(--transition-fast) ease;
+}
+
+.custom-data-table tr.clickable-row:hover {
+  background-color: var(--color-neutral-50);
+}
+
+/* Empty Cell */
+.table-empty-cell {
+  padding: var(--space-16) !important;
+}
+
+.table-default-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.table-default-empty .empty-icon {
+  font-size: var(--font-size-4xl);
+}
+
+.table-default-empty .empty-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Skeleton Loading styles */
+.table-skeleton-row td {
+  padding: var(--space-4) !important;
+}
+
+.skeleton-line {
+  height: 16px;
+  width: 70%;
+  border-radius: var(--radius-sm);
+}

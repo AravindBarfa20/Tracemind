@@ -1,0 +1,63 @@
+# Docker Compose — Tracemind Local Development
+# ============================================================
+# Provides PostgreSQL and Redis for local development.
+# Usage:
+#   make dev-up        (or: docker compose up -d)
+#   make dev-down      (or: docker compose down)
+#   make dev-logs      (or: docker compose logs -f)
+
+services:
+  # --------------------------------------------------------
+  # PostgreSQL 16 — Primary data store
+  # --------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: tracemind-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-tracemind}
+      POSTGRES_USER: ${POSTGRES_USER:-tracemind}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tracemind_dev_password}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-tracemind} -d ${POSTGRES_DB:-tracemind}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - tracemind-network
+
+  # --------------------------------------------------------
+  # Redis 7 — Caching, session store, pub/sub
+  # --------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: tracemind-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - tracemind-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  tracemind-network:
+    driver: bridge

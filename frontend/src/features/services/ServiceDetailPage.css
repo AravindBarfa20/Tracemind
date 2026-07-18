@@ -1,0 +1,212 @@
+.service-detail-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+.detail-view-breadcrumbs {
+  margin-bottom: calc(-1 * var(--space-2));
+}
+
+/* Header banner */
+.detail-view-header-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-5);
+}
+
+.title-and-status-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+
+.detail-service-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.meta-badges-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.team-text-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.header-banner-right {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* Tabs split */
+.detail-view-tabs {
+  margin-bottom: var(--space-2);
+}
+
+.detail-tab-content-area {
+  min-height: 300px;
+}
+
+/* Overview tab grid */
+.overview-tab-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.overview-left-col, .overview-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.panel-subheading {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.overview-description-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Metadata Grid */
+.metadata-properties-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.meta-property-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-2);
+}
+
+.meta-property-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.property-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  text-transform: capitalize;
+}
+
+.property-value {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Network specifications */
+.network-spec-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.spec-label {
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+}
+
+.spec-value {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.truncate-url {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Tags list */
+.tags-badges-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* JSON config code block */
+.json-configuration-block {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  background: var(--color-neutral-900);
+  color: #a9ffc5; /* nice retro coding color */
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  line-height: var(--line-height-normal);
+}
+
+@media (max-width: 992px) {
+  .overview-tab-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Live Health Telemetry Grid */
+.live-health-data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.health-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+
+.health-stat-card .stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+}
+
+.health-stat-card .stat-val {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.health-stat-card .stat-val.success {
+  color: var(--color-success-600);
+}
+
+.health-stat-card .stat-val.error {
+  color: var(--color-error-600);
+}
+

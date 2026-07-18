@@ -1,0 +1,188 @@
+.app-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--color-bg-elevated);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  z-index: 90;
+  transition: width var(--transition-slow) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+/* Brand Header */
+.sidebar-brand-header {
+  height: var(--header-height);
+  padding: 0 var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.brand-logo-area {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-primary-600);
+}
+
+.brand-logo-icon {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.brand-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.sidebar-collapse-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  transition: all var(--transition-fast) ease;
+}
+
+.sidebar-collapse-btn:hover {
+  background: var(--color-neutral-100);
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+/* Nav Container */
+.sidebar-nav-container {
+  flex: 1;
+  padding: var(--space-4) var(--space-3);
+  overflow-y: auto;
+}
+
+.sidebar-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sidebar-nav-section-title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-tertiary);
+  padding: var(--space-3) var(--space-3) var(--space-1) var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: var(--space-1);
+}
+
+.sidebar-nav-hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-2) 0;
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  gap: var(--space-3);
+  transition: all var(--transition-fast) ease;
+  user-select: none;
+}
+
+.sidebar-nav-item:hover {
+  background: var(--color-neutral-100);
+  color: var(--color-text-primary);
+}
+
+.sidebar-nav-item.active {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: inset 3px 0 0 var(--color-primary-600);
+}
+
+.sidebar-nav-item.soon {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.nav-item-icon {
+  font-size: var(--font-size-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+}
+
+.nav-item-label {
+  font-size: var(--font-size-sm);
+  flex: 1;
+}
+
+.coming-soon-badge {
+  font-size: 9px !important;
+}
+
+/* Settings Separator */
+.sidebar-settings-area {
+  padding: var(--space-2) var(--space-3);
+}
+
+/* Footer Profile info */
+.sidebar-user-footer {
+  padding: var(--space-4) var(--space-3);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--color-neutral-50);
+  min-height: 72px;
+}
+
+.sidebar-user-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-name-text {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  text-transform: capitalize;
+}
+
+.user-logout-btn {
+  font-size: var(--font-size-base);
+  opacity: 0.6;
+  transition: opacity var(--transition-fast) ease;
+  padding: var(--space-1);
+}
+
+.user-logout-btn:hover {
+  opacity: 1;
+}

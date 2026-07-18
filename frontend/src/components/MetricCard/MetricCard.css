@@ -1,0 +1,89 @@
+.metric-card {
+  padding: var(--space-4) var(--space-5);
+  position: relative;
+}
+
+/* Color Highlight borders */
+.metric-card.teal { border-top: 3px solid var(--color-primary-500); }
+.metric-card.coral { border-top: 3px solid var(--color-accent-500); }
+.metric-card.blue { border-top: 3px solid var(--color-info-500); }
+.metric-card.green { border-top: 3px solid var(--color-success-500); }
+.metric-card.rose { border-top: 3px solid var(--color-error-500); }
+
+/* Header part */
+.metric-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.metric-card-title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.metric-card-icon-wrapper {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metric-card-icon {
+  font-size: var(--font-size-sm);
+  line-height: 1;
+}
+
+/* Value + Trend */
+.metric-card-middle {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  margin-top: var(--space-1);
+}
+
+.metric-card-value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: 1;
+}
+
+.metric-card-trend {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  gap: var(--space-1);
+}
+
+.metric-card-trend.positive {
+  color: var(--color-success-600);
+}
+
+.metric-card-trend.negative {
+  color: var(--color-error-600);
+}
+
+.trend-arrow {
+  font-size: var(--font-size-sm);
+  line-height: 1;
+}
+
+/* Chart */
+.metric-card-chart-area {
+  margin-top: var(--space-2);
+  margin-bottom: calc(-1 * var(--space-2));
+  height: 40px;
+}
+.recharts-responsive-container {
+  overflow: hidden;
+}
