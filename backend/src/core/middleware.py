@@ -77,8 +77,14 @@ class RequestLoggingAndMetricsMiddleware(BaseHTTPMiddleware):
             metrics_collector.decrement_active()
 
 
+from collections import defaultdict
+
+# Global in-memory rate limits tracker
+_in_memory_limits = defaultdict(list)
+
+
 class RateLimitingMiddleware(BaseHTTPMiddleware):
-    """Redis-backed sliding window rate limiter middleware for production scale security."""
+    """Hybrid rate limiter middleware that uses Redis for scale, falling back to local in-memory tracking if Redis is offline/disabled."""
     
     async def dispatch(self, request: Request, call_next) -> Response:
         path = request.url.path
@@ -86,13 +92,15 @@ class RateLimitingMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
 
         client_ip = request.client.host if request.client else "unknown"
-        
-        import time
-        current_minute = int(time.time() / 60)
-        key = f"ratelimit:{client_ip}:{current_minute}"
         limit = 100
+        window_secs = 60
         
+        # 1. Try Redis Rate Limiting
         try:
+            import time
+            current_minute = int(time.time() / 60)
+            key = f"ratelimit:{client_ip}:{current_minute}"
+            
             from src.core.redis import get_redis_client
             r = get_redis_client()
             count = await r.incr(key)
@@ -106,9 +114,29 @@ class RateLimitingMiddleware(BaseHTTPMiddleware):
                     status_code=429,
                     media_type="application/json",
                 )
+            return await call_next(request)
         except Exception as e:
-            logger.warning(f"Redis Rate Limiter fallback (fail-open) due to: {str(e)}")
+            # Fall back to high-reliability in-memory rate limiting
+            pass
 
+        # 2. Local In-Memory Sliding Window Rate Limiting (Free, zero-downtime, no external database required)
+        import time
+        now = time.time()
+        cutoff = now - window_secs
+        
+        # Clean up and validate
+        timestamps = _in_memory_limits[client_ip]
+        valid_timestamps = [ts for ts in timestamps if ts > cutoff]
+        _in_memory_limits[client_ip] = valid_timestamps
+        
+        if len(valid_timestamps) >= limit:
+            return Response(
+                content='{"error":{"code":429,"message":"Rate limit exceeded. Max 100 requests/min."}}',
+                status_code=429,
+                media_type="application/json",
+            )
+            
+        _in_memory_limits[client_ip].append(now)
         return await call_next(request)
 
 

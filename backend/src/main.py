@@ -96,7 +96,7 @@ def create_app() -> FastAPI:
             logger.error(f"Redis health check failed: {str(e)}")
 
         status_code = 200
-        if db_status == "down" or redis_status == "down":
+        if db_status == "down":
             status_code = 503
 
         return {
