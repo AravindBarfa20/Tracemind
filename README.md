@@ -16,6 +16,24 @@ The platform is designed to be highly resilient, modular, and secure—integrati
 
 ---
 
+## Application Interface (Visual Tour)
+
+Here is a visual walkthrough of the Tracemind platform interface:
+
+#### 📊 Unified Observability Dashboard
+Interactive telemetry feeds, system metrics, and registered microservice counts in dark theme.
+![Tracemind Dashboard](docs/screenshots/dashboard.png)
+
+#### 🤖 AI Diagnostics Console
+Root-cause investigation engine querying Groq/Ollama LLM models for incident analysis.
+![AI Diagnostics](docs/screenshots/ai_diagnostics.png)
+
+#### 🚨 Register Microservice
+Adding microservice metadata (type, environment, URLs) to the central registry.
+![Register Service](docs/screenshots/register_service.png)
+
+---
+
 ## Architecture & System Design
 
 ```
