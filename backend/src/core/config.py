@@ -39,7 +39,7 @@ class Settings(BaseSettings):
     OPENAI_COMPAT_MODEL: str = ""
 
     # CORS Settings
-    CORS_ORIGINS: List[str] = ["http://localhost:5173", "http://localhost:3000"]
+    CORS_ORIGINS: List[str] = ["*"]
 
     model_config = SettingsConfigDict(
         env_file="../.env",

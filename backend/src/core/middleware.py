@@ -27,14 +27,15 @@ class RequestIDMiddleware(BaseHTTPMiddleware):
 
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
-    """Middleware that injects standard security hardening headers to all HTTP responses."""
+    """Middleware that injects standard security hardening headers to non-OPTIONS responses."""
     async def dispatch(self, request: Request, call_next) -> Response:
+        if request.method == "OPTIONS":
+            return await call_next(request)
         response: Response = await call_next(request)
         response.headers["X-Frame-Options"] = "DENY"
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["X-XSS-Protection"] = "1; mode=block"
-        response.headers["Content-Security-Policy"] = "default-src 'self'; frame-ancestors 'none';"
         return response
 
 
@@ -142,17 +143,18 @@ class RateLimitingMiddleware(BaseHTTPMiddleware):
 
 def setup_middleware(app: FastAPI) -> None:
     """Configures middlewares for the FastAPI application."""
-    # CORS
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=settings.CORS_ORIGINS,
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
-
-    # Custom Middlewares (Executed in reverse order of addition)
+    # Custom Middlewares
     app.add_middleware(RateLimitingMiddleware)
     app.add_middleware(RequestLoggingAndMetricsMiddleware)
     app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(RequestIDMiddleware)
+
+    # CORS (Must wrap around all request handlers for OPTIONS preflight)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"] if "*" in settings.CORS_ORIGINS else settings.CORS_ORIGINS,
+        allow_origin_regex=r".*" if "*" in settings.CORS_ORIGINS else None,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
