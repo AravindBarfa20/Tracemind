@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Search } from 'lucide-react';
 import Table, { type Column } from '@/components/Table/Table';
 import Badge from '@/components/Badge/Badge';
 import Card from '@/components/Card/Card';
@@ -142,7 +143,7 @@ export const ServiceListPage: React.FC = () => {
           placeholder="Search services, teams, descriptions..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          leftIcon="🔍"
+          leftIcon={<Search size={16} />}
           className="search-filter-input"
         />
 

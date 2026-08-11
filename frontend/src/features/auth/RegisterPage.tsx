@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Hexagon } from 'lucide-react';
 import { useAuthStore } from '@/store/auth-store';
 import { useToast } from '@/components/Toast/useToast';
 import { useRegister, useLogin } from '@/hooks/api-hooks';
@@ -35,9 +36,9 @@ export const RegisterPage: React.FC = () => {
     if (/[0-9]/.test(password)) score++;
     if (/[^A-Za-z0-9]/.test(password)) score++;
 
-    if (score <= 2) return { score, label: 'Weak 🔴', color: 'var(--color-error-500)' };
-    if (score <= 4) return { score, label: 'Moderate 🟡', color: 'var(--color-warning-500)' };
-    return { score, label: 'Strong 🟢', color: 'var(--color-success-500)' };
+    if (score <= 2) return { score, label: 'Weak', color: 'var(--color-error-500)' };
+    if (score <= 4) return { score, label: 'Moderate', color: 'var(--color-warning-500)' };
+    return { score, label: 'Strong', color: 'var(--color-success-500)' };
   };
 
   const strength = getPasswordStrength();
@@ -93,7 +94,7 @@ export const RegisterPage: React.FC = () => {
       <Card variant="elevated" className="register-card animate-scale-in">
         <Card.Body>
           <div className="register-brand-header">
-            <span className="brand-logo-hex">⬡</span>
+            <Hexagon className="brand-logo-hex" size={28} />
             <h2 className="brand-title">Tracemind</h2>
             <p className="brand-tagline">AI-Powered Engineering Observability</p>
           </div>

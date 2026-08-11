@@ -10,7 +10,7 @@ interface MetricCardProps {
     value: number | string;
     isPositive: boolean;
   };
-  icon?: string;
+  icon?: React.ReactNode;
   color?: 'teal' | 'coral' | 'blue' | 'green' | 'rose';
   sparklineData?: number[];
   className?: string;
@@ -55,7 +55,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
       <div className="metric-card-top">
         <span className="metric-card-title">{title}</span>
         {icon && (
-          <div className="metric-card-icon-wrapper" style={{ backgroundColor: getThemeBg() }}>
+          <div className="metric-card-icon-wrapper" style={{ backgroundColor: getThemeBg(), color: getThemeColor() }}>
             <span className="metric-card-icon">{icon}</span>
           </div>
         )}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { FileText, Zap, Settings, Edit3, Trash2, AlertCircle } from 'lucide-react';
 import { useToast } from '@/components/Toast/useToast';
 import { useService, useUpdateService, useDeleteService, useServiceHealth } from '@/hooks/api-hooks';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
@@ -108,8 +109,8 @@ export const ServiceDetailPage: React.FC = () => {
       <div className="service-detail-view">
         <Card variant="default">
           <Card.Body>
-            <div style={{ color: 'var(--color-error-500)', textAlign: 'center', padding: '32px 0' }}>
-              ⚠️ {(error as any)?.message || 'Service not found or backend API server is unreachable.'}
+            <div style={{ color: 'var(--color-error-500)', textAlign: 'center', padding: '32px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+              <AlertCircle size={18} /> {(error as any)?.message || 'Service not found or backend API server is unreachable.'}
               <div style={{ marginTop: '16px' }}>
                 <Button variant="secondary" onClick={() => navigate('/services')}>Back to Registry</Button>
               </div>
@@ -121,9 +122,9 @@ export const ServiceDetailPage: React.FC = () => {
   }
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: '📝' },
-    { id: 'health', label: 'Health & Telemetry', icon: '⚡' },
-    { id: 'config', label: 'Configuration JSON', icon: '⚙️' }
+    { id: 'overview', label: 'Overview', icon: <FileText size={16} /> },
+    { id: 'health', label: 'Health & Telemetry', icon: <Zap size={16} /> },
+    { id: 'config', label: 'Configuration JSON', icon: <Settings size={16} /> }
   ];
 
   const getEnvBadgeVariant = () => {
@@ -134,28 +135,27 @@ export const ServiceDetailPage: React.FC = () => {
     }
   };
 
-  const breadcrumbs = [
-    { label: 'Services', path: '/services' },
-    { label: service.name }
-  ];
-
   return (
-    <div className="service-detail-view animate-fade-in">
-      <Breadcrumbs items={breadcrumbs} className="detail-view-breadcrumbs" />
+    <div className="service-detail-view-container animate-fade-in">
+      <Breadcrumbs 
+        items={[
+          { label: 'Services', path: '/services' },
+          { label: service.name }
+        ]} 
+      />
 
-      {/* Detail header */}
-      <div className="detail-view-header-banner">
+      {/* Header Banner */}
+      <div className="detail-header-banner">
         <div className="header-banner-left">
-          <div className="title-and-status-row">
+          <div className="banner-title-row">
             <h2 className="detail-service-title">{service.name}</h2>
-            <StatusDot status={service.status === 'active' ? 'healthy' : 'down'} label={service.status} />
+            <StatusDot status={service.status === 'active' ? 'healthy' : 'unknown'} label={service.status === 'active' ? 'Active' : 'Inactive'} />
           </div>
-          
-          <div className="meta-badges-row">
-            <Badge variant="default" size="sm" className="font-mono text-uppercase">
+          <div className="banner-meta-row">
+            <Badge variant="neutral" size="sm" className="service-type-badge text-uppercase">
               {service.service_type}
             </Badge>
-            <Badge variant={getEnvBadgeVariant()} size="sm" className="text-capitalize">
+            <Badge variant={getEnvBadgeVariant()} size="sm" className="env-badge text-capitalize">
               {service.environment}
             </Badge>
             <span className="team-text-label">Team: <strong>{service.team || 'Unassigned'}</strong></span>
@@ -164,10 +164,10 @@ export const ServiceDetailPage: React.FC = () => {
 
         <div className="header-banner-right">
           <Button variant="secondary" size="sm" onClick={openEditModal}>
-            ✏️ Edit Service
+            <Edit3 size={14} style={{ marginRight: '6px' }} /> Edit Service
           </Button>
           <Button variant="danger" size="sm" onClick={handleDeactivate} isLoading={deleteMutation.isPending}>
-            🗑️ Deactivate
+            <Trash2 size={14} style={{ marginRight: '6px' }} /> Deactivate
           </Button>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { Bot, Sparkles } from 'lucide-react';
 import { apiClient } from '@/lib/api-client';
 import { useServices } from '@/hooks/api-hooks';
 import Card from '@/components/Card/Card';
@@ -110,7 +111,7 @@ export const AIAssistantPage: React.FC = () => {
                   fullWidth
                   isLoading={diagnoseMutation.isPending}
                 >
-                  🤖 Run Root-Cause Diagnosis
+                  <Bot size={18} style={{ marginRight: '8px' }} /> Run Root-Cause Diagnosis
                 </Button>
               </form>
             </Card.Body>
@@ -122,7 +123,7 @@ export const AIAssistantPage: React.FC = () => {
           {diagnoseMutation.isPending ? (
             <Card variant="default">
               <Card.Body className="ai-loading-state">
-                <span className="ai-pulse-icon">🤖</span>
+                <span className="ai-pulse-icon"><Sparkles size={28} color="var(--color-primary-500)" /></span>
                 <h4 style={{ margin: '16px 0 8px 0' }}>AI Investigator is analyzing telemetry...</h4>
                 <p style={{ color: 'var(--color-text-secondary)', fontSize: '13px', margin: 0 }}>
                   Querying recent logs, correlating span traces durations, and running inference model.
@@ -179,7 +180,7 @@ export const AIAssistantPage: React.FC = () => {
             <Card variant="default" className="ai-empty-panel">
               <Card.Body>
                 <div className="ai-empty-content">
-                  <span className="ai-empty-icon">🤖</span>
+                  <span className="ai-empty-icon"><Bot size={36} color="var(--color-primary-500)" /></span>
                   <h4>AI Diagnostic Console</h4>
                   <p style={{ color: 'var(--color-text-secondary)', fontSize: '13px', margin: '8px 0 0 0', maxWidth: '380px' }}>
                     Select an observed service component on the left, add context details, and trigger AI analysis to debug system anomalies.

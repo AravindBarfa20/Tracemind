@@ -1,4 +1,5 @@
 import React, { type InputHTMLAttributes, useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import './Input.css';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -51,7 +52,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(({
             onClick={handlePasswordToggle}
             tabIndex={-1}
           >
-            {showPassword ? '🙈' : '👁️'}
+            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         ) : (
           rightIcon && <span className="input-icon right">{rightIcon}</span>

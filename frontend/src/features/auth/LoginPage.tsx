@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Hexagon } from 'lucide-react';
 import { useAuthStore } from '@/store/auth-store';
 import { useToast } from '@/components/Toast/useToast';
 import { useLogin } from '@/hooks/api-hooks';
@@ -56,7 +57,7 @@ export const LoginPage: React.FC = () => {
       <Card variant="elevated" className="login-card animate-scale-in">
         <Card.Body>
           <div className="login-brand-header">
-            <span className="brand-logo-hex">⬡</span>
+            <Hexagon className="brand-logo-hex" size={28} />
             <h2 className="brand-title">Tracemind</h2>
             <p className="brand-tagline">AI-Powered Engineering Observability</p>
           </div>

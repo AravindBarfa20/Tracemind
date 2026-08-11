@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { CheckCircle2, AlertCircle, AlertTriangle, Info, Bell, X } from 'lucide-react';
 import './Toast.css';
 
 export interface ToastMessage {
@@ -27,21 +28,21 @@ export const Toast: React.FC<ToastProps> = ({
     return () => clearTimeout(timer);
   }, [id, duration, onClose]);
 
-  const getEmoji = () => {
+  const renderIcon = () => {
     switch (type) {
-      case 'success': return '✅';
-      case 'error': return '❌';
-      case 'warning': return '⚠️';
-      case 'info': return 'ℹ️';
-      default: return '🔔';
+      case 'success': return <CheckCircle2 size={16} />;
+      case 'error': return <AlertCircle size={16} />;
+      case 'warning': return <AlertTriangle size={16} />;
+      case 'info': return <Info size={16} />;
+      default: return <Bell size={16} />;
     }
   };
 
   return (
     <div className={`toast-notification ${type} animate-scale-in`}>
-      <span className="toast-icon">{getEmoji()}</span>
+      <span className="toast-icon">{renderIcon()}</span>
       <p className="toast-message-text">{message}</p>
-      <button className="toast-close-btn" onClick={() => onClose(id)}>×</button>
+      <button className="toast-close-btn" onClick={() => onClose(id)}><X size={14} /></button>
     </div>
   );
 };

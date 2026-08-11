@@ -5,7 +5,7 @@ import './EmptyState.css';
 interface EmptyStateProps {
   title: string;
   description: string;
-  icon?: string;
+  icon?: React.ReactNode;
   actionLabel?: string;
   onAction?: () => void;
   className?: string;
@@ -14,14 +14,14 @@ interface EmptyStateProps {
 export const EmptyState: React.FC<EmptyStateProps> = ({
   title,
   description,
-  icon = '🔍',
+  icon,
   actionLabel,
   onAction,
   className = '',
 }) => {
   return (
     <div className={`empty-state-wrapper ${className}`}>
-      <div className="empty-state-icon animate-float">{icon}</div>
+      {icon && <div className="empty-state-icon animate-float">{icon}</div>}
       <h3 className="empty-state-title">{title}</h3>
       <p className="empty-state-desc">{description}</p>
       {actionLabel && onAction && (

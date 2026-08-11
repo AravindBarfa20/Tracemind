@@ -110,10 +110,10 @@ export const ServiceCreatePage: React.FC = () => {
                       disabled={isLoading}
                       className="form-select-control"
                     >
-                      <option value="api">📡 API Endpoint</option>
-                      <option value="worker">⚙️ Queue Worker</option>
-                      <option value="cron">⏱️ Cron Job</option>
-                      <option value="frontend">💻 Frontend Client</option>
+                      <option value="api">API Endpoint</option>
+                      <option value="worker">Queue Worker</option>
+                      <option value="cron">Cron Job</option>
+                      <option value="frontend">Frontend Client</option>
                     </select>
                   </div>
 

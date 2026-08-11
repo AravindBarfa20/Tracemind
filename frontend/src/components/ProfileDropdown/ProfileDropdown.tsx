@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { User as UserIcon, Settings, Key, LogOut, ChevronDown } from 'lucide-react';
 import { useAuthStore } from '@/store/auth-store';
 import Avatar from '../Avatar/Avatar';
 import './ProfileDropdown.css';
@@ -35,11 +36,11 @@ export const ProfileDropdown: React.FC = () => {
   if (!user) return null;
 
   const menuItems = [
-    { id: 'profile', icon: '👤', label: 'Profile', action: () => navigate('/settings') },
-    { id: 'settings', icon: '⚙️', label: 'Settings', action: () => navigate('/settings') },
-    { id: 'api-keys', icon: '🔑', label: 'API Keys', action: () => navigate('/settings') },
-    { id: 'divider', icon: '', label: '', action: () => {} },
-    { id: 'signout', icon: '🚪', label: 'Sign Out', action: () => { logout(); navigate('/login'); } },
+    { id: 'profile', icon: <UserIcon size={16} />, label: 'Profile', action: () => navigate('/settings') },
+    { id: 'settings', icon: <Settings size={16} />, label: 'Settings', action: () => navigate('/settings') },
+    { id: 'api-keys', icon: <Key size={16} />, label: 'API Keys', action: () => navigate('/settings') },
+    { id: 'divider', icon: null, label: '', action: () => {} },
+    { id: 'signout', icon: <LogOut size={16} />, label: 'Sign Out', action: () => { logout(); navigate('/login'); } },
   ];
 
   return (
@@ -51,9 +52,7 @@ export const ProfileDropdown: React.FC = () => {
       >
         <Avatar name={user.full_name} size="sm" status="online" />
         <span className="pd-trigger-name">{user.full_name.split(' ')[0]}</span>
-        <svg className="pd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 200ms ease' }}>
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
+        <ChevronDown size={14} className="pd-chevron" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 200ms ease' }} />
       </button>
 
       {isOpen && (

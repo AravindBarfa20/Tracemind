@@ -1,12 +1,22 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { 
+  LayoutDashboard, 
+  Server, 
+  Settings, 
+  Plus, 
+  Radio, 
+  FileText, 
+  AlertTriangle, 
+  Bot 
+} from 'lucide-react';
 import './CommandPalette.css';
 
 interface CommandItem {
   id: string;
   label: string;
   description?: string;
-  icon: string;
+  icon: React.ReactNode;
   category: string;
   action: () => void;
   keywords?: string[];
@@ -27,15 +37,15 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
 
   const defaultItems: CommandItem[] = [
     // Navigation
-    { id: 'nav-dashboard', label: 'Go to Dashboard', description: 'System overview & metrics', icon: '📊', category: 'Navigation', action: () => navigate('/'), keywords: ['home', 'overview'] },
-    { id: 'nav-services', label: 'Go to Services', description: 'Manage registered services', icon: '🔧', category: 'Navigation', action: () => navigate('/services'), keywords: ['registry', 'list'] },
-    { id: 'nav-settings', label: 'Go to Settings', description: 'Profile & preferences', icon: '⚙️', category: 'Navigation', action: () => navigate('/settings'), keywords: ['profile', 'config'] },
+    { id: 'nav-dashboard', label: 'Go to Dashboard', description: 'System overview & metrics', icon: <LayoutDashboard size={16} />, category: 'Navigation', action: () => navigate('/'), keywords: ['home', 'overview'] },
+    { id: 'nav-services', label: 'Go to Services', description: 'Manage registered services', icon: <Server size={16} />, category: 'Navigation', action: () => navigate('/services'), keywords: ['registry', 'list'] },
+    { id: 'nav-settings', label: 'Go to Settings', description: 'Profile & preferences', icon: <Settings size={16} />, category: 'Navigation', action: () => navigate('/settings'), keywords: ['profile', 'config'] },
     // Actions
-    { id: 'act-new-service', label: 'Register New Service', description: 'Add a microservice to registry', icon: '➕', category: 'Actions', action: () => navigate('/services/new'), keywords: ['create', 'add'] },
-    { id: 'act-traces', label: 'Browse Traces', description: 'Distributed tracing — Phase 3', icon: '📡', category: 'Actions', action: () => {}, keywords: ['tracing', 'spans'] },
-    { id: 'act-logs', label: 'Search Logs', description: 'Structured log search — Phase 3', icon: '📋', category: 'Actions', action: () => {}, keywords: ['logging', 'stdout'] },
-    { id: 'act-incidents', label: 'View Incidents', description: 'Incident management — Phase 3', icon: '🚨', category: 'Actions', action: () => {}, keywords: ['alerts', 'pagerduty'] },
-    { id: 'act-ai', label: 'Ask AI Assistant', description: 'AI investigation hints — Phase 3', icon: '🤖', category: 'Actions', action: () => {}, keywords: ['llm', 'ollama', 'groq'] },
+    { id: 'act-new-service', label: 'Register New Service', description: 'Add a microservice to registry', icon: <Plus size={16} />, category: 'Actions', action: () => navigate('/services/new'), keywords: ['create', 'add'] },
+    { id: 'act-traces', label: 'Browse Traces', description: 'Distributed tracing spans', icon: <Radio size={16} />, category: 'Actions', action: () => navigate('/traces'), keywords: ['tracing', 'spans'] },
+    { id: 'act-logs', label: 'Search Logs', description: 'Structured log search', icon: <FileText size={16} />, category: 'Actions', action: () => navigate('/logs'), keywords: ['logging', 'stdout'] },
+    { id: 'act-incidents', label: 'View Incidents', description: 'Incident management', icon: <AlertTriangle size={16} />, category: 'Actions', action: () => navigate('/incidents'), keywords: ['alerts', 'pagerduty'] },
+    { id: 'act-ai', label: 'Ask AI Assistant', description: 'AI investigation console', icon: <Bot size={16} />, category: 'Actions', action: () => navigate('/ai-assistant'), keywords: ['llm', 'ollama', 'groq'] },
   ];
 
   const allItems = [...defaultItems, ...extraItems];

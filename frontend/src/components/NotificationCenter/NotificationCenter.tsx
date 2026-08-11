@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { AlertCircle, Rocket, Activity, Info, AlertTriangle, Bell } from 'lucide-react';
 import './NotificationCenter.css';
 
 interface Notification {
@@ -20,12 +21,14 @@ const MOCK_NOTIFICATIONS: Notification[] = [
   { id: '6', type: 'deployment', title: 'Deployment Started', message: 'Notification Service v1.8.0 building for production', timestamp: new Date(Date.now() - 8 * 3600000), isRead: true, service: 'notification-service' },
 ];
 
-const typeConfig: Record<string, { icon: string; color: string }> = {
-  alert: { icon: '🚨', color: 'var(--color-error-500)' },
-  deployment: { icon: '🚀', color: 'var(--color-info-500)' },
-  health: { icon: '💚', color: 'var(--color-success-500)' },
-  info: { icon: 'ℹ️', color: 'var(--color-info-500)' },
-  warning: { icon: '⚠️', color: 'var(--color-warning-500)' },
+const renderTypeIcon = (type: string) => {
+  switch (type) {
+    case 'alert': return <AlertCircle size={15} color="var(--color-error-500)" />;
+    case 'deployment': return <Rocket size={15} color="var(--color-info-500)" />;
+    case 'health': return <Activity size={15} color="var(--color-success-500)" />;
+    case 'warning': return <AlertTriangle size={15} color="var(--color-warning-500)" />;
+    default: return <Info size={15} color="var(--color-info-500)" />;
+  }
 };
 
 function formatRelativeTime(date: Date): string {
@@ -85,10 +88,7 @@ export const NotificationCenter: React.FC = () => {
         title="Notifications"
         aria-label="Notifications"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-        </svg>
+        <Bell size={18} />
         {unreadCount > 0 && (
           <span className="nc-badge">{unreadCount}</span>
         )}
@@ -108,7 +108,7 @@ export const NotificationCenter: React.FC = () => {
           <div className="nc-panel-list">
             {notifications.length === 0 ? (
               <div className="nc-empty">
-                <span className="nc-empty-icon">🔔</span>
+                <span className="nc-empty-icon"><Bell size={24} /></span>
                 <p>All caught up!</p>
                 <span className="nc-empty-desc">No new notifications</span>
               </div>
@@ -119,8 +119,8 @@ export const NotificationCenter: React.FC = () => {
                   className={`nc-item ${!notif.isRead ? 'unread' : ''}`}
                   onClick={() => markAsRead(notif.id)}
                 >
-                  <div className="nc-item-icon-wrap" style={{ '--nc-icon-color': typeConfig[notif.type]?.color } as React.CSSProperties}>
-                    <span>{typeConfig[notif.type]?.icon}</span>
+                  <div className="nc-item-icon-wrap">
+                    {renderTypeIcon(notif.type)}
                   </div>
                   <div className="nc-item-body">
                     <span className="nc-item-title">{notif.title}</span>

@@ -1,6 +1,21 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Tooltip, Area } from 'recharts';
+import { 
+  Server, 
+  AlertTriangle, 
+  Zap, 
+  ShieldCheck, 
+  Calendar, 
+  Plus, 
+  Search, 
+  Bot, 
+  Radio, 
+  Cpu, 
+  Clock, 
+  Monitor,
+  AlertCircle
+} from 'lucide-react';
 import { useAuthStore } from '@/store/auth-store';
 import { useToast } from '@/components/Toast/useToast';
 import { useServices } from '@/hooks/api-hooks';
@@ -61,6 +76,19 @@ export const DashboardPage: React.FC = () => {
 
   const totalServicesCount = servicesData?.total ?? 0;
 
+  const renderServiceTypeBadge = (type: string) => {
+    switch (type) {
+      case 'api':
+        return <span className="service-type-badge-emoji"><Radio size={14} /> API</span>;
+      case 'worker':
+        return <span className="service-type-badge-emoji"><Cpu size={14} /> Worker</span>;
+      case 'cron':
+        return <span className="service-type-badge-emoji"><Clock size={14} /> Cron</span>;
+      default:
+        return <span className="service-type-badge-emoji"><Monitor size={14} /> Frontend</span>;
+    }
+  };
+
   return (
     <div className="dashboard-view-container animate-fade-in">
       {/* Welcome Greeting Banner */}
@@ -72,7 +100,7 @@ export const DashboardPage: React.FC = () => {
           <p className="welcome-banner-subtitle">Here is what is happening across your systems today.</p>
         </div>
         <div className="welcome-banner-right">
-          <span className="banner-date-badge">📅 {todayStr}</span>
+          <span className="banner-date-badge"><Calendar size={14} style={{ marginRight: '6px' }} /> {todayStr}</span>
         </div>
       </div>
 
@@ -83,7 +111,7 @@ export const DashboardPage: React.FC = () => {
           value={isLoading ? '...' : totalServicesCount.toString()}
           trend={{ value: 'Real-time count', isPositive: true }}
           color="teal"
-          icon="🔧"
+          icon={<Server size={20} />}
           sparklineData={[10, 10, 11, 11, 11, 12, totalServicesCount > 0 ? totalServicesCount : 12]}
         />
         <MetricCard
@@ -91,7 +119,7 @@ export const DashboardPage: React.FC = () => {
           value="3"
           trend={{ value: '+1 triggered recently', isPositive: false }}
           color="coral"
-          icon="🚨"
+          icon={<AlertTriangle size={20} />}
           sparklineData={[1, 2, 2, 4, 3, 2, 3]}
         />
         <MetricCard
@@ -99,7 +127,7 @@ export const DashboardPage: React.FC = () => {
           value="142ms"
           trend={{ value: '-8.5% improvement', isPositive: true }}
           color="blue"
-          icon="⚡"
+          icon={<Zap size={20} />}
           sparklineData={[162, 154, 150, 145, 140, 145, 142]}
         />
         <MetricCard
@@ -107,7 +135,7 @@ export const DashboardPage: React.FC = () => {
           value="99.94%"
           trend={{ value: '0.02% variance', isPositive: true }}
           color="green"
-          icon="✅"
+          icon={<ShieldCheck size={20} />}
           sparklineData={[99.91, 99.92, 99.91, 99.93, 99.94, 99.92, 99.94]}
         />
       </div>
@@ -130,128 +158,108 @@ export const DashboardPage: React.FC = () => {
               <h3 className="panel-card-title">System Request Volume (24h)</h3>
             </Card.Header>
             <Card.Body>
-              <div className="chart-container-wrapper">
-                <ResponsiveContainer width="100%" height={260}>
+              <div className="chart-container-wrapper" style={{ width: '100%', height: 260 }}>
+                <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={requestVolumeData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <defs>
-                      <linearGradient id="reqVolumeGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="var(--color-primary-500)" stopOpacity={0.25} />
+                      <linearGradient id="colorRequests" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="var(--color-primary-500)" stopOpacity={0.4} />
                         <stop offset="95%" stopColor="var(--color-primary-500)" stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
-                    <XAxis 
-                      dataKey="time" 
-                      stroke="var(--color-text-tertiary)" 
-                      fontSize={11} 
-                      tickLine={false} 
-                    />
-                    <YAxis 
-                      stroke="var(--color-text-tertiary)" 
-                      fontSize={11} 
-                      tickLine={false} 
-                    />
+                    <XAxis dataKey="time" stroke="var(--color-text-tertiary)" fontSize={12} tickLine={false} axisLine={false} />
+                    <YAxis stroke="var(--color-text-tertiary)" fontSize={12} tickLine={false} axisLine={false} />
                     <Tooltip 
                       contentStyle={{ 
-                        background: 'var(--color-bg-elevated)', 
-                        borderColor: 'var(--color-border)',
+                        backgroundColor: 'var(--color-surface-overlay)', 
+                        borderColor: 'var(--color-border-subtle)',
                         borderRadius: 'var(--radius-md)',
-                        boxShadow: 'var(--shadow-md)'
-                      }}
-                      labelStyle={{ fontWeight: 'bold', fontSize: 12, color: 'var(--color-text-primary)' }}
-                      itemStyle={{ color: 'var(--color-primary-700)', fontSize: 12 }}
+                        color: 'var(--color-text-primary)'
+                      }} 
                     />
-                    <Area
-                      type="monotone"
-                      dataKey="requests"
-                      name="Requests/min"
-                      stroke="var(--color-primary-600)"
-                      strokeWidth={2}
-                      fillOpacity={1}
-                      fill="url(#reqVolumeGrad)"
-                    />
+                    <Area type="monotone" dataKey="requests" stroke="var(--color-primary-500)" strokeWidth={2} fillOpacity={1} fill="url(#colorRequests)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             </Card.Body>
           </Card>
 
-          {/* Section: Service Health Grid */}
-          <div className="dashboard-section-header">
-            <h3 className="section-heading-title">Service Registries Health</h3>
-            <Link to="/services" className="section-header-link-anchor">View all registries →</Link>
+          {/* Section: Services Health */}
+          <div className="dashboard-services-section">
+            <div className="section-heading-bar">
+              <h3 className="section-heading-title">Service Registries Health</h3>
+              <Link to="/services" className="section-header-link-anchor">View all registries →</Link>
+            </div>
+            
+            {isLoading ? (
+              <div className="services-health-grid">
+                {Array.from({ length: 4 }).map((_, idx) => (
+                  <Card key={idx} variant="default" className="service-health-card skeleton-card-override">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+                      <Skeleton shape="text" width="60%" height={16} />
+                      <Skeleton shape="text" width="30%" height={12} />
+                      <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                        <Skeleton shape="rect" width="30%" height={24} />
+                        <Skeleton shape="rect" width="30%" height={24} />
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            ) : error ? (
+              <Card variant="default">
+                <Card.Body>
+                  <div style={{ color: 'var(--color-error-500)', textAlign: 'center', padding: '16px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                    <AlertCircle size={18} /> Failed to load service registry: {(error as any).message || 'Server connection error'}
+                  </div>
+                </Card.Body>
+              </Card>
+            ) : !servicesData?.items || servicesData.items.length === 0 ? (
+              <EmptyState
+                title="No services registered yet"
+                description="Monitor your APIs, workers, cron jobs and frontend components."
+                actionLabel="Register Service"
+                onAction={() => navigate('/services/new')}
+              />
+            ) : (
+              <div className="services-health-grid">
+                {servicesData.items.map((service) => (
+                  <Card 
+                    key={service.id} 
+                    variant="default" 
+                    hover 
+                    onClick={() => navigate(`/services/${service.slug}`)}
+                    className="service-health-card animate-scale-in"
+                  >
+                    <div className="service-card-top">
+                      <div className="service-name-and-type">
+                        <h4 className="service-title-text">{service.name}</h4>
+                        {renderServiceTypeBadge(service.service_type)}
+                      </div>
+                      <StatusDot status={service.status === 'active' ? 'healthy' : 'unknown'} label={service.status === 'active' ? 'Active' : 'Inactive'} />
+                    </div>
+                    
+                    <div className="service-card-meta-metrics">
+                      <div className="meta-metric-item">
+                        <span className="meta-metric-label">Environment</span>
+                        <span className="meta-metric-value" style={{ textTransform: 'capitalize' }}>{service.environment}</span>
+                      </div>
+                      <div className="meta-metric-item">
+                        <span className="meta-metric-label">Team</span>
+                        <span className="meta-metric-value truncate">{service.team || 'Unassigned'}</span>
+                      </div>
+                      <div className="meta-metric-item">
+                        <span className="meta-metric-label">Status</span>
+                        <span className="meta-metric-value truncate" style={{ color: service.status === 'active' ? 'var(--color-success-600)' : 'var(--color-text-secondary)' }}>
+                          {service.status}
+                        </span>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
-          
-          {isLoading ? (
-            <div className="services-health-grid">
-              {Array.from({ length: 4 }).map((_, idx) => (
-                <Card key={idx} variant="default" className="service-health-card skeleton-card-override">
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
-                    <Skeleton shape="text" width="60%" height={16} />
-                    <Skeleton shape="text" width="30%" height={12} />
-                    <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
-                      <Skeleton shape="rect" width="30%" height={24} />
-                      <Skeleton shape="rect" width="30%" height={24} />
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          ) : error ? (
-            <Card variant="default">
-              <Card.Body>
-                <div style={{ color: 'var(--color-error-500)', textAlign: 'center', padding: '16px 0' }}>
-                  ⚠️ Failed to load service registry: {(error as any).message || 'Server connection error'}
-                </div>
-              </Card.Body>
-            </Card>
-          ) : !servicesData?.items || servicesData.items.length === 0 ? (
-            <EmptyState
-              title="No services registered yet"
-              description="Monitor your APIs, workers, cron jobs and frontend components."
-              actionLabel="Register Service"
-              onAction={() => navigate('/services/new')}
-            />
-          ) : (
-            <div className="services-health-grid">
-              {servicesData.items.map((service) => (
-                <Card 
-                  key={service.id} 
-                  variant="default" 
-                  hover 
-                  onClick={() => navigate(`/services/${service.slug}`)}
-                  className="service-health-card animate-scale-in"
-                >
-                  <div className="service-card-top">
-                    <div className="service-name-and-type">
-                      <h4 className="service-title-text">{service.name}</h4>
-                      <span className="service-type-badge-emoji">
-                        {service.service_type === 'api' ? '📡 API' : service.service_type === 'worker' ? '⚙️ Worker' : service.service_type === 'cron' ? '⏱️ Cron' : '🖥️ Frontend'}
-                      </span>
-                    </div>
-                    <StatusDot status={service.status === 'active' ? 'healthy' : 'unknown'} label={service.status === 'active' ? 'Active' : 'Inactive'} />
-                  </div>
-                  
-                  <div className="service-card-meta-metrics">
-                    <div className="meta-metric-item">
-                      <span className="meta-metric-label">Environment</span>
-                      <span className="meta-metric-value" style={{ textTransform: 'capitalize' }}>{service.environment}</span>
-                    </div>
-                    <div className="meta-metric-item">
-                      <span className="meta-metric-label">Team</span>
-                      <span className="meta-metric-value truncate">{service.team || 'Unassigned'}</span>
-                    </div>
-                    <div className="meta-metric-item">
-                      <span className="meta-metric-label">Status</span>
-                      <span className="meta-metric-value truncate" style={{ color: service.status === 'active' ? 'var(--color-success-600)' : 'var(--color-text-secondary)' }}>
-                        {service.status}
-                      </span>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          )}
-
         </div>
 
         {/* Right Side splits */}
@@ -264,23 +272,23 @@ export const DashboardPage: React.FC = () => {
             </Card.Header>
             <Card.Body className="quick-actions-body">
               <button className="quick-action-btn-card teal" onClick={() => navigate('/services/new')}>
-                <span className="btn-card-icon">➕</span>
+                <span className="btn-card-icon"><Plus size={18} /></span>
                 <div className="btn-card-details">
                   <span className="btn-card-label">Register Service</span>
                   <span className="btn-card-sublabel">Add monitored component</span>
                 </div>
               </button>
               
-              <button className="quick-action-btn-card blue" onClick={() => addToast('Distributed tracing viewer coming in Phase 3', 'info')}>
-                <span className="btn-card-icon">🔍</span>
+              <button className="quick-action-btn-card blue" onClick={() => addToast('Distributed tracing viewer active in Traces menu', 'info')}>
+                <span className="btn-card-icon"><Search size={18} /></span>
                 <div className="btn-card-details">
                   <span className="btn-card-label">Investigate Traces</span>
                   <span className="btn-card-sublabel">Browse transactions flow</span>
                 </div>
               </button>
 
-              <button className="quick-action-btn-card coral" onClick={() => addToast('AI incident correlation analysis triggers in Phase 3', 'info')}>
-                <span className="btn-card-icon">🤖</span>
+              <button className="quick-action-btn-card coral" onClick={() => navigate('/ai-assistant')}>
+                <span className="btn-card-icon"><Bot size={18} /></span>
                 <div className="btn-card-details">
                   <span className="btn-card-label">Run AI Diagnostic</span>
                   <span className="btn-card-sublabel">Search incident patterns</span>

@@ -1,5 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { 
+  LayoutDashboard, 
+  Server, 
+  Radio, 
+  FileText, 
+  TrendingUp, 
+  AlertTriangle, 
+  Bot, 
+  Settings, 
+  LogOut, 
+  Hexagon, 
+  ChevronLeft, 
+  ChevronRight 
+} from 'lucide-react';
 import { useAuthStore } from '@/store/auth-store';
 import Avatar from '../Avatar/Avatar';
 import Badge from '../Badge/Badge';
@@ -16,15 +30,15 @@ export const Sidebar: React.FC = () => {
   };
 
   const navItems = [
-    { type: 'link', path: '/', label: 'Dashboard', icon: '📊' },
-    { type: 'link', path: '/services', label: 'Services', icon: '🔧' },
+    { type: 'link', path: '/', label: 'Dashboard', icon: <LayoutDashboard size={18} /> },
+    { type: 'link', path: '/services', label: 'Services', icon: <Server size={18} /> },
     { type: 'divider', label: 'Observability' },
-    { type: 'link', path: '/traces', label: 'Traces', icon: '📡' },
-    { type: 'link', path: '/logs', label: 'Logs', icon: '📋' },
-    { type: 'link', path: '/metrics', label: 'Metrics', icon: '📈' },
+    { type: 'link', path: '/traces', label: 'Traces', icon: <Radio size={18} /> },
+    { type: 'link', path: '/logs', label: 'Logs', icon: <FileText size={18} /> },
+    { type: 'link', path: '/metrics', label: 'Metrics', icon: <TrendingUp size={18} /> },
     { type: 'divider', label: 'Operations' },
-    { type: 'link', path: '/incidents', label: 'Incidents', icon: '🚨' },
-    { type: 'link', path: '/ai-assistant', label: 'AI Assistant', icon: '🤖' },
+    { type: 'link', path: '/incidents', label: 'Incidents', icon: <AlertTriangle size={18} /> },
+    { type: 'link', path: '/ai-assistant', label: 'AI Assistant', icon: <Bot size={18} /> },
   ];
 
   return (
@@ -32,7 +46,7 @@ export const Sidebar: React.FC = () => {
       {/* Brand Header */}
       <div className="sidebar-brand-header">
         <div className="brand-logo-area">
-          <span className="brand-logo-icon">⬡</span>
+          <Hexagon className="brand-logo-icon" size={22} />
           {!isCollapsed && <span className="brand-name">Tracemind</span>}
         </div>
         <button 
@@ -40,7 +54,7 @@ export const Sidebar: React.FC = () => {
           onClick={() => setIsCollapsed(!isCollapsed)}
           title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         >
-          {isCollapsed ? '›' : '‹'}
+          {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </button>
       </div>
 
@@ -95,7 +109,7 @@ export const Sidebar: React.FC = () => {
           to="/settings"
           className={`sidebar-nav-item ${isActive('/settings') ? 'active' : ''}`}
         >
-          <span className="nav-item-icon">⚙️</span>
+          <span className="nav-item-icon"><Settings size={18} /></span>
           {!isCollapsed && <span className="nav-item-label">Settings</span>}
         </Link>
       </div>
@@ -116,7 +130,7 @@ export const Sidebar: React.FC = () => {
               onClick={logout} 
               title="Sign Out"
             >
-              🚪
+              <LogOut size={16} />
             </button>
           )}
         </div>

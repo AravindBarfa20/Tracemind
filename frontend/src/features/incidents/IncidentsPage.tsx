@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { AlertTriangle, Eye, CheckCircle2, AlertCircle } from 'lucide-react';
 import { apiClient } from '@/lib/api-client';
 import { useServices } from '@/hooks/api-hooks';
 import Card from '@/components/Card/Card';
@@ -164,16 +165,16 @@ export const IncidentsPage: React.FC = () => {
           ) : error ? (
             <Card variant="default">
               <Card.Body>
-                <div style={{ color: 'var(--color-error-500)', textAlign: 'center', padding: '24px 0' }}>
-                  ⚠️ Failed to load incidents: {(error as any).message || 'Server connection error.'}
+                <div style={{ color: 'var(--color-error-500)', textAlign: 'center', padding: '16px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                  <AlertCircle size={18} /> Failed to load incidents: {(error as any).message || 'Server connection error.'}
                 </div>
               </Card.Body>
             </Card>
           ) : !incidents || incidents.length === 0 ? (
             <EmptyState
               title="No alerts triggered"
-              description="Sytem metrics and logs channels are running clean. Trigger a mock alert on the right to test resolving flows."
-              icon="🚨"
+              description="System metrics and logs channels are running clean. Trigger a mock alert on the right to test resolving flows."
+              icon={<AlertTriangle size={32} color="var(--color-warning-500)" />}
             />
           ) : (
             <div className="incidents-list-container">
@@ -210,7 +211,7 @@ export const IncidentsPage: React.FC = () => {
                           onClick={() => statusMutation.mutate({ id: incident.id, status: 'acknowledged' })}
                           isLoading={statusMutation.isPending}
                         >
-                          👁️ Acknowledge
+                          <Eye size={14} style={{ marginRight: '6px' }} /> Acknowledge
                         </Button>
                       )}
                       {incident.status !== 'resolved' && (
@@ -220,7 +221,7 @@ export const IncidentsPage: React.FC = () => {
                           onClick={() => statusMutation.mutate({ id: incident.id, status: 'resolved' })}
                           isLoading={statusMutation.isPending}
                         >
-                          ✅ Resolve
+                          <CheckCircle2 size={14} style={{ marginRight: '6px' }} /> Resolve
                         </Button>
                       )}
                     </div>

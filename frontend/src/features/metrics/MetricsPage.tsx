@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { TrendingUp } from 'lucide-react';
 import { apiClient } from '@/lib/api-client';
 import { useServices } from '@/hooks/api-hooks';
 import Card from '@/components/Card/Card';
@@ -142,7 +143,7 @@ export const MetricsPage: React.FC = () => {
             <EmptyState
               title="No metrics captured yet"
               description="Inject simulated metric data points using the panel on the right to view real-time time-series lines."
-              icon="📈"
+              icon={<TrendingUp size={32} color="var(--color-primary-500)" />}
             />
           ) : (
             <div className="metrics-panels-list">
@@ -224,7 +225,7 @@ export const MetricsPage: React.FC = () => {
                   fullWidth
                   isLoading={ingestMetricMutation.isPending}
                 >
-                  📈 Ingest Metric Point
+                  <TrendingUp size={16} style={{ marginRight: '6px' }} /> Ingest Metric Point
                 </Button>
               </form>
             </Card.Body>
