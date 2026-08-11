@@ -41,9 +41,15 @@
 
 .brand-name {
   font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
+  font-weight: 800;
   color: var(--color-text-primary);
-  letter-spacing: var(--letter-spacing-tight);
+  letter-spacing: -0.02em;
+}
+
+.brand-name-short {
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  color: var(--color-primary-500);
 }
 
 .sidebar-collapse-btn {

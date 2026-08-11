@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Hexagon } from 'lucide-react';
 import { useAuthStore } from '@/store/auth-store';
 import { useToast } from '@/components/Toast/useToast';
 import { useRegister, useLogin } from '@/hooks/api-hooks';
@@ -94,7 +93,6 @@ export const RegisterPage: React.FC = () => {
       <Card variant="elevated" className="register-card animate-scale-in">
         <Card.Body>
           <div className="register-brand-header">
-            <Hexagon className="brand-logo-hex" size={28} />
             <h2 className="brand-title">Tracemind</h2>
             <p className="brand-tagline">AI-Powered Engineering Observability</p>
           </div>

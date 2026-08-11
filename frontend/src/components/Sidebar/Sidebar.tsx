@@ -10,7 +10,6 @@ import {
   Bot, 
   Settings, 
   LogOut, 
-  Hexagon, 
   ChevronLeft, 
   ChevronRight 
 } from 'lucide-react';
@@ -46,8 +45,11 @@ export const Sidebar: React.FC = () => {
       {/* Brand Header */}
       <div className="sidebar-brand-header">
         <div className="brand-logo-area">
-          <Hexagon className="brand-logo-icon" size={22} />
-          {!isCollapsed && <span className="brand-name">Tracemind</span>}
+          {!isCollapsed ? (
+            <span className="brand-name">Tracemind</span>
+          ) : (
+            <span className="brand-name-short">T</span>
+          )}
         </div>
         <button 
           className="sidebar-collapse-btn" 
