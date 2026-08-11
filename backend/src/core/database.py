@@ -35,11 +35,16 @@ class TimestampMixin:
     )
 
 # Create Async Engine
+connect_args = {}
+if "pooler.supabase" in settings.DATABASE_URL or "supabase" in settings.DATABASE_URL:
+    connect_args["prepared_statement_cache_size"] = 0
+
 engine = create_async_engine(
     settings.DATABASE_URL,
     pool_size=settings.DB_POOL_SIZE,
     max_overflow=settings.DB_MAX_OVERFLOW,
     echo=settings.DB_ECHO,
+    connect_args=connect_args,
 )
 
 # Async Session Factory
