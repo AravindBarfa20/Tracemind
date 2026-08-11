@@ -1,0 +1,140 @@
+.logs-page-view {
+  width: 100%;
+}
+
+.logs-grid-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.logs-sidebar-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.logs-panel-heading {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.logs-filters-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.filter-item-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.filter-label {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.logs-select-control {
+  height: 38px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  padding: 0 var(--space-3);
+  width: 100%;
+  transition: all var(--transition-fast);
+}
+
+.logs-select-control:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 2px var(--color-focus-ring);
+  outline: none;
+}
+
+.logs-ingest-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Console Container */
+.logs-console-card {
+  height: calc(100vh - var(--header-height) - var(--space-12));
+  display: flex;
+  flex-direction: column;
+}
+
+.logs-console-card > .card-body {
+  flex: 1;
+  overflow: hidden;
+  padding: 0;
+}
+
+.logs-console-body {
+  height: 100%;
+  overflow-y: auto;
+  background: #0f1419; /* premium deep terminal color */
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.logs-monospace-stream {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: var(--line-height-normal);
+  color: #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.logs-line-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  word-break: break-all;
+}
+
+.log-line-time {
+  color: #78909c;
+  flex-shrink: 0;
+}
+
+.log-line-badge {
+  flex-shrink: 0;
+  min-width: 60px;
+  text-align: center;
+}
+
+.log-line-message {
+  flex: 1;
+}
+
+.log-line-attributes {
+  color: #80cbc4;
+  font-size: 11px;
+  background: rgba(0, 150, 136, 0.15);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+@media (max-width: 992px) {
+  .logs-grid-layout {
+    grid-template-columns: 1fr;
+  }
+  .logs-console-card {
+    height: 500px;
+  }
+}
