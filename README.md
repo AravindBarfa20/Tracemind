@@ -1,150 +1,151 @@
-# Tracemind — Intelligent Engineering Observability
+# Tracemind — AI-Powered Engineering Observability & Incident Response Platform
 
-Tracemind is a high-performance, developer-first engineering observability suite designed to ingest time-series metrics, logs, and distributed traces, correlate operational signals, and assist developers in diagnosing root causes for system anomalies.
+> A full-stack, developer-first engineering observability suite designed to ingest real-time metrics, logs, and distributed traces, track microservice health, and assist engineering teams with AI-driven root-cause diagnosis.
 
-The platform is designed to be highly resilient, modular, and secure—integrating multi-tenant project scoping, automatic connection fallbacks, and real-time middleware validation out of the box.
-
----
-
-## Key Capabilities
-
-*   **Correlated Observability Engine**: Cross-reference logs, distributed spans (`parent_span_id` chains), and Prometheus metrics across microservices under a unified UI timeline.
-*   **Dynamic LLM Diagnostics Fallback**: If the primary local inference model (Ollama) is unreachable, the system automatically redirects request flows to Groq Cloud API, preventing service interruptions.
-*   **Redis-Backed Rate Limiting**: Production-grade sliding-window rate limiting middleware (100 req/min per IP) built with a fail-open architecture to prioritize API availability.
-*   **Multi-Tenant Organization Isolation**: Explicit workspace, project, and organization scoping applied implicitly at the ORM query level, preventing database-level tenant cross-leakage.
-*   **Interactive Regression Replay**: Capture client HTTP transactions and replay them to test downstream microservice performance and regressions.
+[![Live Production Web Portal](https://img.shields.io/badge/Live_Web_App-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://tracemind-tau.vercel.app)
+[![Live API Server](https://img.shields.io/badge/API_Gateway-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://tracemind-1cn2.onrender.com/docs)
+[![Python 3.11](https://img.shields.io/badge/Backend-FastAPI_Python_3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://fastapi.tiangolo.com)
+[![React 18](https://img.shields.io/badge/Frontend-React_18_TypeScript-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![PostgreSQL](https://img.shields.io/badge/Database-Supabase_PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
 
 ---
 
-## Application Interface (Visual Tour)
+## 🌐 Live Deployments
 
-Here is a visual walkthrough of the Tracemind platform interface:
+* **Web Portal (Production SPA)**: [https://tracemind-tau.vercel.app](https://tracemind-tau.vercel.app)
+* **API Gateway & Swagger Interactive Docs**: [https://tracemind-1cn2.onrender.com/docs](https://tracemind-1cn2.onrender.com/docs)
+* **API Health Check**: [https://tracemind-1cn2.onrender.com/health](https://tracemind-1cn2.onrender.com/health)
 
-#### 📊 Unified Observability Dashboard
-Interactive telemetry feeds, system metrics, and registered microservice counts in dark theme.
-![Tracemind Dashboard](docs/screenshots/dashboard.png)
+---
 
+## 🚀 Key Features
 
-## Architecture & System Design
+* **Unified Microservices Registry**: Real-time service status indicators (Active/Inactive), environment tags (Production/Staging/Dev), and microservice ownership metadata.
+* **Telemetry & Time-Series Ingestion**: High-throughput metric streaming (CPU, memory, request latencies) and real-time visualization powered by Recharts.
+* **Distributed Traces & Log Analytics**: Correlation between trace IDs, parent-child span timelines, and structured log searching across microservice components.
+* **Incident Management & Escalation**: Severity-based alerting (P0-P3), automated acknowledgement/resolution workflows, and timeline activity logs.
+* **AI Diagnostic Assistant**: LLM-driven anomaly diagnosis, automated root-cause hypotheses, and actionable code fixes powered by Groq (Llama-3.3-70B) & Ollama fallback.
+* **Enterprise Security & Multitenancy**: Dual-token JWT authentication (access + refresh tokens), bcrypt password hashing (12 salt rounds), tenant isolation, and sliding-window rate limiting.
+
+---
+
+## 🏗 System Architecture
 
 ```
-                     ┌────────────────────────┐
-                     │    Vite Frontend       │
-                     │  (React & TypeScript)  │
-                     └───────────┬────────────┘
-                                 │
-                            HTTP / JSON
-                                 ▼
-                     ┌────────────────────────┐
-                     │   FastAPI Web Engine   │
-                     │      (Python 3.11)     │
-                     └───────────┬────────────┘
-                                 │
-         ┌───────────────────────┼───────────────────────┐
-         ▼                       ▼                       ▼
-┌────────────────┐      ┌────────────────┐      ┌────────────────┐
-│   PostgreSQL   │      │  Redis Cache   │      │   LLM Layer    │
-│  (Database)    │      │ (Rate Limiter) │      │ (Ollama/Groq)  │
-└────────────────┘      └────────────────┘      └────────────────┘
+                    ┌────────────────────────────────┐
+                    │      Vercel Production UI      │
+                    │   (React 18 / TypeScript / Vite) │
+                    └───────────────┬────────────────┘
+                                    │
+                               HTTPS / REST
+                                    ▼
+                    ┌────────────────────────────────┐
+                    │     Render API Gateway         │
+                    │     (FastAPI / Python 3.11)    │
+                    └───────────────┬────────────────┘
+                                    │
+        ┌───────────────────────────┼───────────────────────────┐
+        ▼                           ▼                           ▼
+┌────────────────┐         ┌────────────────┐         ┌────────────────┐
+│ Supabase Cloud │         │  Redis Cache   │         │   Groq / LLM   │
+│  (PostgreSQL)  │         │ (Rate Limiter) │         │ (AI Diagnosis) │
+└────────────────┘         └────────────────┘         └────────────────┘
 ```
 
-### Request Pipeline & Middleware Stack
-1.  **Request ID Generation**: Generates unique UUID headers for request correlation.
-2.  **Security Headers**: Enforces strict XSS/Frame security policies.
-3.  **Metrics Collector**: Records active connection counts and routes performance stats to a Prometheus endpoint.
-4.  **Redis Sliding-Window Rate Limiter**: Validates client request budgets before processing.
-5.  **Multi-Tenant Resolution**: Decodes JWT and injects database transaction boundaries scoped strictly to the user's active tenant context.
+---
+
+## 💻 Tech Stack
+
+### Frontend
+* **Core**: React 18, TypeScript, Vite
+* **State Management**: TanStack Query (React Query v5), Zustand
+* **UI Components & Icons**: Custom Design System, `lucide-react` High-Precision Vector Icons
+* **Charts**: Recharts
+
+### Backend
+* **Framework**: FastAPI (Python 3.11)
+* **ORM & Database**: Asyncpg + SQLAlchemy 2.0 (Async), Alembic Migrations
+* **Security & Auth**: PyJWT, Passlib (bcrypt 12 rounds)
+* **Cache & Rate Limiting**: Redis Async Pool + Fallback Sliding Window Limiter
+* **AI Engine**: Groq Cloud API (`llama-3.3-70b-versatile`) with local Ollama fallback
 
 ---
 
-## Technical Stack
-
-*   **Backend Web Server**: FastAPI (Python 3.11) using AsyncPG for non-blocking asynchronous PostgreSQL connections.
-*   **Database & Migrations**: PostgreSQL 16 + Alembic for declarative schema migrations.
-*   **Cache & Protection**: Redis 7 using async connection pools.
-*   **UI Client**: React 18, TypeScript, Vite, React Query (TanStack) for state caching, and Tailwind-compatible design system.
-*   **Security & Encryption**: bcrypt (12 rounds) for password hashing and HS256 JWT tokens for sessions.
-
----
-
-## Getting Started
+## 🛠 Local Setup & Running Guide
 
 ### Prerequisites
-- Python 3.11+
-- Node.js 20+
-- Docker & Docker Compose
+* **Python**: 3.11+
+* **Node.js**: 18+
+* **Docker Desktop**: Running locally (for local PostgreSQL & Redis)
 
-### Fast Bootstrap
+### 1. Clone & Environment Setup
 ```bash
-# 1. Clone the repository
 git clone https://github.com/AravindBarfa20/Tracemind.git
 cd Tracemind
-
-# 2. Copy environment variables
-cp .env.example .env
-
-# 3. Provision database, run migrations, and install dependencies
-make setup
-
-# 4. Spin up dev servers in separate terminal panes
-make backend-dev   # Port 8000
-make frontend-dev  # Port 5173
 ```
+
+### 2. Run Infrastructure (Docker)
+```bash
+docker-compose up -d
+```
+
+### 3. Backend Setup
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Run database migrations
+alembic upgrade head
+
+# Start backend dev server
+uvicorn src.main:app --reload --port 8000
+```
+
+### 4. Frontend Setup
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+Access the application at `http://localhost:5173`.
 
 ---
 
-## Operations & Configurations
+## 📄 Environment Variables Configuration
 
-### LLM / AI Configuration
-LLM providers are registered inside `.env`. The system supports Ollama, Groq, and OpenAI Compat:
-```ini
-LLM_PROVIDER=ollama
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=llama3.2
-GROQ_API_KEY=your-api-key
-GROQ_MODEL=llama-3.3-70b-versatile
-```
-*Note: If `LLM_PROVIDER` is set to `ollama` but local Ollama is offline, the API dynamically utilizes the configured `GROQ_API_KEY` to prevent application downtime.*
+### Backend (`backend/.env`)
+| Variable | Description | Example / Recommended Default |
+| :--- | :--- | :--- |
+| `APP_ENV` | Application environment mode | `production` / `development` |
+| `DATABASE_URL` | Asynchronous PostgreSQL connection string | `postgresql+asyncpg://postgres:pass@host:6543/postgres` |
+| `REDIS_URL` | Redis caching connection string | `redis://localhost:6379/0` |
+| `SECRET_KEY` | JWT signing secret key | `your-production-super-secret-key` |
+| `LLM_PROVIDER` | Preferred LLM inference provider | `groq` / `ollama` |
+| `GROQ_API_KEY` | Groq API authentication key | `gsk_...` |
 
-### Database Migrations
-Database modifications are managed declaratively using Alembic.
+### Frontend (`frontend/.env`)
+| Variable | Description | Value |
+| :--- | :--- | :--- |
+| `VITE_API_URL` | Backend REST API endpoint base URL | `https://tracemind-1cn2.onrender.com` |
+
+---
+
+## 🧪 Testing
+
+Run backend integration test suite:
 ```bash
-# Apply migrations to database
-make migrate
-
-# Generate new migration version
-cd backend
-.venv/bin/alembic revision --autogenerate -m "describe_changes"
-```
-
-### Running Test Suite
-Verify endpoint integrity, security context hooks, and validation layers:
-```bash
-# Run backend test suite
 make test-backend
 ```
 
+Run frontend production bundle check:
+```bash
+cd frontend && npm run build
+```
+
 ---
 
-## Directory Structure
+## 📜 License
 
-```
-Tracemind/
-├── backend/              # FastAPI Application
-│   ├── src/
-│   │   ├── core/         # DB Connection, Redis pool, Middleware, Config
-│   │   ├── auth/         # JWT Validation & Auth Pipelines
-│   │   ├── telemetry/    # Telemetry Ingestion API (logs, metrics, spans)
-│   │   ├── incidents/    # Alert States and Incident Timeline Registry
-│   │   └── llm/          # Interface agnostic LLM client layers
-│   ├── alembic/          # Database Migration Versions
-│   └── tests/            # pytest integration suites
-├── frontend/             # React Application
-│   ├── src/
-│   │   ├── components/   # Modular layout items & Design Tokens
-│   │   ├── features/     # Feature-scoped pages (Traces, Logs, Incidents)
-│   │   └── styles/       # Dark mode theme overrides & typography
-│   └── vite.config.ts    # Client bundler configuration
-├── docker-compose.yml    # Database & Cache infrastructure
-└── Makefile              # System automation shortcuts
-```
+Distributed under the MIT License. See `LICENSE` for more information.
